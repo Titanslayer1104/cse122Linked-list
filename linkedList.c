@@ -9,23 +9,30 @@ struct Node{
 
 int main() {
   struct Node* head = NULL; 
-  push(&head, 6);
-  isempty(&head);
-  printinglist(head); 
+  add(&head, 6);
+  add(&head, 9); 
+  printinglist(head);
+
 }
 
-void push(struct Node** head_ref, int new_val){
+void add(struct Node** head, int new_val){
   struct Node* new = (struct Node*)malloc(sizeof(struct Node));
+  struct Node* last = *head;
 
-  new->val = new_val;
+  new->val=new_val;
+  new->next=NULL;
 
-  new->next = (*head_ref);
-  new->prev = NULL;
-
-  if((*head_ref) != NULL){
-    (*head_ref)->prev = new;
+  if(*head == NULL) {
+    new->prev=NULL;
+    *head=new;
+    return;
   }
-  (*head_ref) = new;
+
+  while (last->next != NULL){
+    last=last->next;
+  }
+  last->next=new;
+  new->prev=last; 
 }
 
 void printinglist(struct Node* node){
